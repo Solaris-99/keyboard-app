@@ -17,7 +17,7 @@
         "start:dev": "node .",
         "build": "androidjs build"
     },
-    "author": "",
+    "author": "Solaris-99",
     "license": "ISC",
     "dependencies": {
         "androidjs": "^2.0.2"

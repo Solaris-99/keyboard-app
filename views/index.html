@@ -68,7 +68,7 @@
     }
 
     #SPACE {
-      width: 60% !important;
+      width: 30% !important;
     }
     #connect_modal{
       position:fixed; 
@@ -101,11 +101,12 @@
 
   <script>
     const spanishKeyboardLayout = [
+      ["ESC","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","HOME","ENS","DEL","INS",],
       ["|", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "'", "¿", "BACKSPACE","CONNECT"],
       ["TAB", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "´", "+", "\\"],
       ["CAPS LOCK", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ","{","}", "ENTER"],
-      ["SHIFT","<", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "-", "SHIFT"],
-      ["CTRL","WIN", "ALT", "SPACE", "ALT GR","WIN","MENU", "CTRL"]
+      ["SHIFT","<", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "-","UP", "SHIFT"],
+      ["CTRL","WIN", "ALT", "SPACE", "ALT GR","WIN","MENU", "CTRL","LEFT","DOWN","RIGHT"]
     ];
     for (let i = 0; i < spanishKeyboardLayout.length; i++) {
       const div_row = document.createElement("div")
