@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Webview Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../assets/bootstrap.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="../node_modules/androidjs/lib/androidjs.js"></script>
+  <script type="text/javascript" src="../assets/kboard/key-codes.js"></script>
+
+</head>
+
+<style>
+  .app {
+    font-size: 30px;
+  }
+</style>
+
+<body>
+
+  <div id="board">
+    <!-- <h3 class="display-3" id='msg'>Hello, world!</h3> -->
+  </div>
+
+  <script type="text/javascript" src="../assets/script.js"></script>
+  <script src="../assets/jquery-3.3.1.slim.min.js"></script>
+  <script src="../assets/popper.min.js"></script>
+  <script src="../assets/bootstrap.min.js"></script>
+  <script src="./assets/ipc/androidjs.js"></script>
+  <style type="text/css">
+    html,
+    body {
+      height: 100%;
+      background-color: black;
+    }
+
+    button {
+      border: 2px outset white;
+      background-color: black;
+      color: white;
+      transition: 0.3s;
+    }
+
+    button:active {
+      background-color: white;
+      border: 2px inset grey;
+      color: black;
+    }
+
+    #board {
+      width: 100%;
+      height: 600px;
+    }
+
+    #board div {
+      max-width: 100%;
+      height: 100px;
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    #board div button {
+      width: 7.6%;
+      height: 100px;
+    }
+
+    #ESPACIO {
+      width: 38% !important;
+    }
+  </style>
+  <!--
+<script type="text/javascript">
+	function toggle_popover() {
+		$('#popover').popover('toggle')
+	}
+</script>
+-->
+
+  <div id="connect_modal" style="height: 80%; width: 80%; display: none;">
+    <form action="#">
+      <label for="ip">IP</label>
+      <input type="text" id="ip" name="ip">
+    </form>
+    <button id="close_modal" onclick="button_func(e)">Close</button>
+    <button id="CONNECT" onclick="button_func(e)">Connect</button>
+  </div>
+
+  <script>
+    for (let i = 0; i < keys.length; i++) {
+      const div_row = document.createElement("div")
+      div_row.setAttribute("id", "row_" + i)
+      document.getElementById("board").appendChild(div_row)
+      for (const [key, val] of Object.entries(keys[i])) {
+        const button = document.createElement("button")
+        const node = document.createTextNode(key)
+        if (key == "CTRL" || key == "SHIFT" || key == "ALT") {
+          button.setAttribute("onmousedown", "button_func(event)")
+          button.setAttribute("onmouseup", "button_func(event)")
+        }
+        else {
+          button.setAttribute("onclick", "button_func(event)")
+        }
+        button.setAttribute("id", key)
+        button.appendChild(node)
+        document.getElementById("row_" + i).appendChild(button)
+      }
+    }
+
+  </script>
+
+  <script>
+    let button_func = function (event) {
+      console.log(event.target)
+      let id = event.target.id
+      if(id="CONNECT"){
+        
+      }
+      else{
+      front.send('btn', id);
+      front.on('btn', function (msg) {
+        console.log(msg);
+      })
+    }
+    }
+  </script>
+
+</body>
+
+</html>
