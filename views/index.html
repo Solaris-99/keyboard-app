@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Webview Example</title>
+  <title>Keyboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="../assets/bootstrap.min.css">
@@ -51,8 +51,11 @@
     }
 
     #board {
-      width: 100%;
-      height: 600px;
+      margin: auto;
+      margin-top:5rem;
+      width: 95%;
+      height: fit-content;
+      
     }
 
     #board div {
@@ -80,6 +83,9 @@
       padding: 1rem;
       border: 1px solid black;
       border-radius: 4px;
+    }
+    #CONNECT{
+      background-color: red;
     }
   </style>
   <!--
@@ -147,6 +153,18 @@
         })
     }
     }
+  </script>
+  <script>
+    let con_button = document.getElementById("CONNECT")
+    front.on("NET_STATUS",(connection)=>{
+      if(connection){
+        con_button.style.backgroundColor = "green";
+      }
+      else{
+        con_button.style.backgroundColor = "red";
+      }
+    }
+    )
   </script>
 
 </body>
