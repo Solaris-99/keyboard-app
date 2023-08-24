@@ -1,6 +1,7 @@
 const back = require('androidjs').back;
 const net = require('net');
 
+
 let opts = {
 	port: 8001,
 	host: 'localhost'
@@ -8,6 +9,7 @@ let opts = {
 
 let connected = false
 let client = null
+
 back.on("IP",(msg) =>{
 	opts.host = msg
 	client = net.createConnection(opts)

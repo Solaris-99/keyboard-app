@@ -49,13 +49,18 @@
       border: 2px inset grey;
       color: black;
     }
+    .active{
+      background-color: white;
+      border: 2px inset grey;
+      color: black;
+    }
 
     #board {
       margin: auto;
-      margin-top:5rem;
+      margin-top: 5rem;
       width: 95%;
       height: fit-content;
-      
+
     }
 
     #board div {
@@ -73,18 +78,20 @@
     #SPACE {
       width: 30% !important;
     }
-    #connect_modal{
-      position:fixed; 
-      top:10vh; 
-      left: 30vw; 
-      background-color: rgb(32, 28, 49); 
-      width: 20rem ;
+
+    #connect_modal {
+      position: fixed;
+      top: 10vh;
+      left: 30vw;
+      background-color: rgb(32, 28, 49);
+      width: 20rem;
       height: 10rem;
       padding: 1rem;
       border: 1px solid black;
       border-radius: 4px;
     }
-    #CONNECT{
+
+    #CONNECT {
       background-color: red;
     }
   </style>
@@ -105,14 +112,15 @@
     <button id="NET_CONNECT" onclick="button_func(event)">Connect</button>
   </div>
 
+  <!-- KEYBOARD POPULATION -->
   <script>
     const spanishKeyboardLayout = [
-      ["ESC","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","HOME","ENS","DEL","INS",],
-      ["|", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "'", "¿", "BACKSPACE","CONNECT"],
+      ["ESC", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12", "HOME", "ENS", "DEL", "INS",],
+      ["|", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "'", "¿", "BACKSPACE", "CONNECT"],
       ["TAB", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "´", "+", "\\"],
-      ["CAPS LOCK", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ","{","}", "ENTER"],
-      ["SHIFT","<", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "-","UP", "SHIFT"],
-      ["CTRL","WIN", "ALT", "SPACE", "ALT GR","WIN","MENU", "CTRL","LEFT","DOWN","RIGHT"]
+      ["CAPS LOCK", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ", "{", "}", "ENTER"],
+      ["SHIFT", "<", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "-", "UP", "RSHIFT"],
+      ["CTRL", "WIN", "ALT", "SPACE", "ALT GR", "WIN", "MENU", "RCTRL", "LEFT", "DOWN", "RIGHT"]
     ];
     for (let i = 0; i < spanishKeyboardLayout.length; i++) {
       const div_row = document.createElement("div")
@@ -130,37 +138,94 @@
     }
 
   </script>
-
+  <!-- KEY FUNCTION -->
   <script>
+    let special_keys = {
+      "CTRL": false,
+      "ALT": false,
+      "SHIFT": false,
+      "CAPS LOCK": false
+    }
     let button_func = function (event) {
-    const modal = document.getElementById("connect_modal")
+      const modal = document.getElementById("connect_modal")
       console.log(event.target)
       let id = event.target.id
-      if(id=="CONNECT"){
+      if (id == "CONNECT") {
         modal.style.display = "block"
       }
-      else if(id=="close_modal"){
+      else if (id == "close_modal") {
         console.log("closing modal")
         modal.style.display = "none"
       }
-      else{
+      else {
         front.send('btn', id);
-        if(id == "NET_CONNECT"){
+        if (id == "NET_CONNECT") {
           front.send('IP', document.getElementById("ip").value)
         }
-      front.on('btn', function (msg) {
-        console.log(msg);
+        else if (id == "CTRL" || id == "RCTRL" || id == "ALT GR"){
+          special_keys["CTRL"] = !special_keys["CTRL"]
+        }
+        else if (id == "SHIFT" || id == "RSHIFT"){
+          special_keys["SHIFT"] = !special_keys["SHIFT"]
+        }
+        else if (id == "CAPS LOCK" || id == "CAPS LOCK"){
+          special_keys["CAPS LOCK"] = !special_keys["CAPS LOCK"]
+        }
+        if (id == "ALT" || id == "ALT GR"){
+          special_keys["ALT"] = !special_keys["ALT"]
+        }
+        if(special_keys["CTRL"]){
+          document.getElementById("CTRL").className = "active"
+          document.getElementById("RCTRL").className = "active"
+        }
+        else{
+          document.getElementById("CTRL").className = ""
+          document.getElementById("RCTRL").className = ""
+        }
+        if(special_keys["SHIFT"]){
+          document.getElementById("SHIFT").className = "active"
+          document.getElementById("RSHIFT").className = "active"
+        }
+        else{
+          document.getElementById("SHIFT").className = ""
+          document.getElementById("RSHIFT").className = ""
+        }
+        if(special_keys["ALT"]){
+          document.getElementById("ALT").className = "active"
+        }
+        else{
+          document.getElementById("ALT").className = ""
+        }
+        if(special_keys["CAPS LOCK"]){
+          document.getElementById("CAPS LOCK").className = "active"
+        }
+        else{
+          document.getElementById("CAPS LOCK").className = ""
+        }
+        if (special_keys["CTRL"] && special_keys["ALT"]){
+          document.getElementById("ALT GR").className = "active"
+        }
+        else{
+          document.getElementById("ALT GR").className = ""
+        }
+
+
+        front.on('btn', function (msg) {
+          console.log(msg);
         })
+      }
     }
-    }
+
   </script>
+
+  <!-- NET STATUS -->
   <script>
     let con_button = document.getElementById("CONNECT")
-    front.on("NET_STATUS",(connection)=>{
-      if(connection){
+    front.on("NET_STATUS", (connection) => {
+      if (connection) {
         con_button.style.backgroundColor = "green";
       }
-      else{
+      else {
         con_button.style.backgroundColor = "red";
       }
     }
